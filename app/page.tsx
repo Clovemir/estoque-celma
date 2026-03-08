@@ -1,5 +1,6 @@
 import { connectToDatabase } from "@/lib/mongodb";
-import { Product, DEPARTAMENTOS } from "@/models/Product";
+import { Product } from "@/models/Product";
+import { DEPARTAMENTOS } from "@/models/ProductMeta";
 
 export const dynamic = "force-dynamic";
 

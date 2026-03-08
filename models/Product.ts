@@ -1,15 +1,8 @@
 import mongoose, { Schema, models, model } from "mongoose";
-
-export const DEPARTAMENTOS = [
-  "Estrutura",
-  "Acabamento",
-  "Hidráulica",
-  "Elétrica",
-  "Ferramentas",
-  "Iluminação",
-] as const;
-
-export type Departamento = (typeof DEPARTAMENTOS)[number];
+// departments and related type live in a separate module that can safely
+// be imported by client components. importing mongoose in a client bundle
+// was causing runtime errors during hydration (see admin login bug).
+import { DEPARTAMENTOS, Departamento } from "./ProductMeta";
 
 export interface IProduct extends mongoose.Document {
   nome: string;
