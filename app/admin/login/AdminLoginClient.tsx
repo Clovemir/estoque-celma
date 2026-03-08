@@ -30,8 +30,16 @@ export default function AdminLoginClient() {
         return;
       }
 
-      router.push(from);
-      router.refresh();
+      // after a successful login we need to navigate to the target page
+      // without forcing a refresh. the refresh call was firing before the
+      // browser had a chance to store the cookie sent by the POST response,
+      // so the first client-side navigation arrived at `/admin` without the
+      // auth cookie and the middleware redirected back to the login route,
+      // which produced the blank‑screen flash the user described. using
+      // `router.replace` (or a full `window.location` change) ensures the
+      // cookie is already present when the request for the new page is made.
+      await router.replace(from); // replace so we don't keep the login page
+      // note: no router.refresh(), it's unnecessary
     } catch (err) {
       console.error(err);
       setError("Erro ao fazer login");
