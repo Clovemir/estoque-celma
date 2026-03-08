@@ -17,6 +17,7 @@ type Product = {
 export default function AdminPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<Product | null>(null);
   const [reloading, setReloading] = useState(false);
 
@@ -25,9 +26,15 @@ export default function AdminPage() {
     try {
       const res = await fetch("/api/products");
       const data = await res.json();
-      setProducts(data);
+      if (!res.ok) {
+        // the API may respond with an error if the database is misconfigured
+        setError(data.error || "Falha ao carregar produtos");
+      } else {
+        setProducts(data);
+      }
     } catch (err) {
       console.error(err);
+      setError("Erro de rede ao consultar produtos");
     } finally {
       setLoading(false);
       setReloading(false);
@@ -88,7 +95,11 @@ export default function AdminPage() {
               </div>
             )}
           </div>
-          {loading ? (
+          {error ? (
+        <p className="text-sm text-red-600 bg-red-50 border border-red-100 rounded p-4">
+          {error}
+        </p>
+      ) : loading ? (
             <div className="space-y-2">
               {[...Array(4)].map((_, i) => (
                 <div

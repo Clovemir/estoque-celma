@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, FormEvent } from "react";
-import { DEPARTAMENTOS } from "@/models/Product";
+import { DEPARTAMENTOS } from "@/models/ProductMeta";
 import { productSchema } from "@/lib/validation/product";
 import type { ZodFormattedError } from "zod";
 

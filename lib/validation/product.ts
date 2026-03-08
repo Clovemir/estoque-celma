@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { DEPARTAMENTOS } from "@/models/Product";
+import { DEPARTAMENTOS } from "@/models/ProductMeta";
 
 export const productSchema = z.object({
   nome: z.string().min(2, "Informe pelo menos 2 caracteres"),
